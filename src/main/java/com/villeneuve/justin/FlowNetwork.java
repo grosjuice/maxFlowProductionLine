@@ -13,8 +13,9 @@ public class FlowNetwork {
     private int s; // source
     private int t; // sink
     private Edge[] edgeTo;
+    private final double[] vertexCapacities;
 
-    public FlowNetwork(int n, int m, LinkedList<Edge>[] adj, Map<String, Edge> map) {
+    public FlowNetwork(int n, int m, LinkedList<Edge>[] adj, Map<String, Edge> map, double[] vertexCapacities) {
         this.n = n;
         this.m = m;
         this.flowValue = 0.0;
@@ -22,6 +23,7 @@ public class FlowNetwork {
         this.map = map;
         this.s = 0;
         this.t = n - 1;
+        this.vertexCapacities = vertexCapacities;
     }
 
     public int getN() {
@@ -104,13 +106,45 @@ public class FlowNetwork {
     public String toString() {
         StringBuilder s = new StringBuilder();
 
+        // edge output
         for (Edge e : map.values()) {
             String edge = "Edge : (" + e.getU() + "," + e.getV() + ")";
             String flow = "flow = " + e.getFlow();
             String capacity = "capacity = " + e.getCapacity();
 
-            s.append(edge + "\t" + flow + "\t\t" + capacity + "\n");
+            s.append(edge + "\t\t" + flow + "\t\t" + capacity + "\n");
         }
+
+        s.append("---\n");
+
+        // vertex output
+        double[] vertexOutFlows = new double[n];
+        for (int i = 0; i < n; i++) {
+            double outflow = 0;
+            for (Edge e : adj[i]) {
+                if (e.getU() == i) {
+                    outflow += e.getFlow();
+                }
+            }
+            vertexOutFlows[i] = outflow;
+        }
+
+        for (int i = 0; i < n; i++) {
+            double epsilon = 1E-10;
+
+            String vertex = "vertex : " + i;
+            String flow = "flow = " + vertexOutFlows[i];
+            String capacity = "capacity : " + vertexCapacities[i];
+            String bottleneck = "";
+
+            if (Math.abs(vertexCapacities[i] - vertexOutFlows[i]) < epsilon) {
+                bottleneck += "bottleneck";
+            }
+
+            s.append(vertex + "\t\t" + flow + "\t\t" + capacity + "\t\t" + bottleneck + "\n");
+        }
+
+
 
         return s.toString();
     }
