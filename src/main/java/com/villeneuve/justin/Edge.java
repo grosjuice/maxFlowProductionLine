@@ -5,14 +5,13 @@ public class Edge implements Comparable<Edge>{
     // attributes
     private final int u;
     private final int v;
-    private final int capacity;
+    private double capacity;
     private double flow;
 
     // constructor
-    public Edge(int u, int v, int capacity, double flow) {
+    public Edge(int u, int v) {
         this.u = u;
         this.v = v;
-        this.capacity = capacity;
         this.flow = 0.0;
     }
 
@@ -25,8 +24,12 @@ public class Edge implements Comparable<Edge>{
         return v;
     }
 
-    public int getCapacity() {
+    public double getCapacity() {
         return capacity;
+    }
+
+    public void setCapacity(double capacity) {
+        this.capacity = capacity;
     }
 
     public double getFlow() {
