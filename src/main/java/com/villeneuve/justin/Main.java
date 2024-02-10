@@ -9,15 +9,31 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * The Max Flow Problem involves finding the maximum amount of flow that can be sent from a designated source node
+ * to a designated sink node in a flow network. A flow network is represented by a directed graph where each edge has
+ * a capacity indicating the maximum amount of flow it can carry. The goal is to determine the maximum flow from the
+ * source to the sink while respecting capacity constraints and maintaining flow conservation at intermediate nodes.
+ *
+ * This code is a variant of the common max flow problem, where the capacities reside on the edges. Here, the capacities
+ * are initially on the nodes. This allows to model other types of problems, like determining the max flow in a production
+ * line.
+ */
+
 public class Main {
     public static void main(String[] args) {
-        String in = args[0];
-        String out = args[1];
+        String in = args[0]; // input file
+        String out = args[1]; // output file
         FlowNetwork G = readFile(in);
-        G.edmondsKarp();
+        G.edmondsKarp(); // run edmonds karp algorithm to find max flow in graph
         writeFile(out, G.toString());
     }
 
+    /**
+     *
+     * @param inputFile the graph to apply the edmond's karp algorithm (for the maxflow problem).
+     * @return the flow network
+     */
     public static FlowNetwork readFile(String inputFile) {
         ClassLoader classLoader = Main.class.getClassLoader();
         File file = new File(classLoader.getResource(inputFile).getFile());
@@ -105,8 +121,14 @@ public class Main {
         return new FlowNetwork(n, m, adj, map, capacities);
     }
 
+    /**
+     *
+     * writes the results to a file
+     *
+     * @param output the output file
+     * @param content the content written to the file
+     */
     public static void writeFile(String output, String content) {
-        ClassLoader classLoader = Main.class.getClassLoader();
         String path = System.getProperty("user.dir") + "/data/" + output;
 
 

@@ -4,14 +4,15 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 
+
 public class FlowNetwork {
-    private int n; // number of vertices
-    private int m; // number of edges
+    private final int n; // number of vertices
+    private final int m; // number of edges
     private double flowValue; // the current flow value
     private LinkedList<Edge>[] adj; // adjacency list
     private Map<String, Edge> map;
-    private int s; // source
-    private int t; // sink
+    private final int s; // source
+    private final int t; // sink
     private Edge[] edgeTo;
     private final double[] vertexCapacities;
 
@@ -26,10 +27,18 @@ public class FlowNetwork {
         this.vertexCapacities = vertexCapacities;
     }
 
+    /**
+     *
+     * @return the number of vertices in the graph
+     */
     public int getN() {
         return n;
     }
 
+    /**
+     *
+     * @return the number of edges in the graph
+     */
     public int getM() {
         return m;
     }
@@ -143,8 +152,6 @@ public class FlowNetwork {
 
             s.append(vertex + "\t\t" + flow + "\t\t" + capacity + "\t\t" + bottleneck + "\n");
         }
-
-
 
         return s.toString();
     }
